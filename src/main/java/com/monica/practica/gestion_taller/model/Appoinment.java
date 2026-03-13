@@ -2,7 +2,6 @@ package com.monica.practica.gestion_taller.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -10,20 +10,6 @@ import java.time.LocalTime;
 @RequestMapping("/gestion-taller")
 public class AppoinmentController {
 
-    @GetMapping("/appoinment")
-    public Appoinment getAppoinment() {
-        Appoinment appoinmentCreate = new Appoinment();
-        appoinmentCreate.setNameClient("Monica");
-        appoinmentCreate.setPlateNumber("JXW7498");
-        appoinmentCreate.setPhoneNumber(2345335);
-        appoinmentCreate.setDate(LocalDate.of(2026, 3, 11));
-        appoinmentCreate.setNewClient(true);
-        appoinmentCreate.setMotive("asdfg");
-        appoinmentCreate.setTime(LocalTime.of(15, 30));
-
-        return appoinmentCreate;
-    }
-
     @PostMapping("/appoinment")
     public Appoinment postAppoinment(@RequestBody Appoinment newAppoinment) {
         Appoinment appoinmentCreate = new Appoinment();
@@ -34,9 +20,30 @@ public class AppoinmentController {
         appoinmentCreate.setNewClient(newAppoinment.getNewClient());
         appoinmentCreate.setMotive(newAppoinment.getMotive());
         appoinmentCreate.setTime(newAppoinment.getTime());
+        //guardamos en la bd
 
         return appoinmentCreate;
     }
 
+    @GetMapping("/appoinment/{id}")
+    public String getAppoinment(@PathVariable Long id) {
+//        if(si cita no existe){
+//            return "Appoinment does not exist";
+//        }
+        //Lo buscamos en la bd
+
+        return "Appoinmnent with id(" + id + "): ";
+    }
+
+    @DeleteMapping("/appoinment/{id}")
+    public String deleteAppoinment(@PathVariable Long id){
+//        if( si cita no existe  ){
+//            return "Appointment does not exist";
+//        }
+        //borramos de la bd
+
+        return "Appoinmnent with id(" + id + ") deleted.";
+    }
 
 }
+
