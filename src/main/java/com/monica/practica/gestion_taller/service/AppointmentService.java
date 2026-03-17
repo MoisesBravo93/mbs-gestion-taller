@@ -1,46 +1,34 @@
 package com.monica.practica.gestion_taller.service;
 
 import com.monica.practica.gestion_taller.model.Appointment;
+import com.monica.practica.gestion_taller.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentService {
 
+    private AppointmentRepository appointmentRepository;
+
     public Appointment postAppointment (Appointment newAppointment){
-        Appointment appointmentCreate = new Appointment();
-        if(newAppointment != null){
-            appointmentCreate.setNameClient(newAppointment.getNameClient());
-            appointmentCreate.setPlateNumber(newAppointment.getPlateNumber());
-            appointmentCreate.setPhoneNumber(newAppointment.getPhoneNumber());
-            appointmentCreate.setDate(newAppointment.getDate());
-            appointmentCreate.setNewClient(newAppointment.getNewClient());
-            appointmentCreate.setMotive(newAppointment.getMotive());
-            appointmentCreate.setTime(newAppointment.getTime());
-//            Save in DB
-        }
-
-        return appointmentCreate;
+        return appointmentRepository.save(newAppointment);
     }
 
+    // Para un solo appointment por id
     public Appointment getAppointment (Long id){
-//      if(appointment(id) != null){
-//            return null;
-//        }
-//        Search in DB
-        Appointment appointment = new Appointment();
-//        appointment = appointment(id);
-
-
-        return appointment;
+        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+        return optionalAppointment.get();
     }
 
-    public String deleteAppointment (Long id){
-//        if(appointment(id) != null){
-//            return "Appointment does not exist.";
-//        }
-//        Delete in DB
+    // Para todos los appointments
+    public List<Appointment> getAllAppointments(){
+        return appointmentRepository.findAll();
+    }
 
-        return "Appointment deleted.";
+    public void deleteAppointment (Long id){
+        appointmentRepository.deleteById(id);
     }
 
 

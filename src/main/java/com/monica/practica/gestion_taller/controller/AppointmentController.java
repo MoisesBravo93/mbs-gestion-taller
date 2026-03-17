@@ -3,6 +3,7 @@ package com.monica.practica.gestion_taller.controller;
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.service.AppointmentService;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/gestion-taller")
@@ -14,22 +15,24 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
     }
 
-    @PostMapping("/appointment")
-    public Appointment postAppointment(@RequestBody Appointment newAppointment) {
-
+    @PostMapping
+    public Appointment postAppointment(Appointment newAppointment) {
         return appointmentService.postAppointment(newAppointment);
     }
 
-    @GetMapping("/appointment/{id}")
-    public Appointment getAppointment(@PathVariable Long id) {
+    @GetMapping
+    public List<Appointment> getAllAppointments(){
+        return appointmentService.getAllAppointments();
+    }
 
+    @GetMapping("{id}")
+    public Appointment getAppointment(@PathVariable Long id) {
         return appointmentService.getAppointment(id);
     }
 
-    @DeleteMapping("/appointment/{id}")
-    public String deleteAppointment(@PathVariable Long id){
-
-        return appointmentService.deleteAppointment(id);
+    @DeleteMapping("{id}")
+    public void deleteAppointment(@PathVariable Long id) {
+        appointmentService.deleteAppointment(id);
     }
 
 }
