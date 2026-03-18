@@ -1,43 +1,38 @@
 package com.monica.practica.gestion_taller.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.repository.AppointmentRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class AppointmentService {
 
-    private AppointmentRepository appointmentRepository;
+  private final AppointmentRepository appointmentRepository;
 
-    public Appointment postAppointment (Appointment newAppointment){
-        return appointmentRepository.save(newAppointment);
-    }
+  public AppointmentService(AppointmentRepository appointmentRepository) {
+    this.appointmentRepository = appointmentRepository;
+  }
 
-    // Para un solo appointment por id
-    public Appointment getAppointment (Long id){
-        Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
-        return optionalAppointment.get();
-    }
+  public Appointment postAppointment(Appointment newAppointment) {
+    return appointmentRepository.save(newAppointment);
+  }
 
-    // Para todos los appointments
-    public List<Appointment> getAllAppointments(){
-        return appointmentRepository.findAll();
-    }
+  // Para un solo appointment por id
+  public Appointment getAppointment(Long id) {
+    Optional<Appointment> optionalAppointment = appointmentRepository.findById(id);
+    return optionalAppointment.get();
+  }
 
-    public void deleteAppointment (Long id){
-        appointmentRepository.deleteById(id);
-    }
+  // Para todos los appointments
+  public List<Appointment> getAllAppointments() {
+    return appointmentRepository.findAll();
+  }
 
-
-
-
-
-
-
-
-
+  public void deleteAppointment(Long id) {
+    appointmentRepository.deleteById(id);
+  }
 
 }
