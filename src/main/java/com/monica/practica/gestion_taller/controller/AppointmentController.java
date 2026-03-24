@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.monica.practica.gestion_taller.model.Appointment;
+import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class AppointmentController {
 
   // @PatchMapping
   //actualizaciones parciales
+
 
 }
 

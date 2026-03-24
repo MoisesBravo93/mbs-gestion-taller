@@ -2,13 +2,9 @@ package com.monica.practica.gestion_taller.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,21 +25,22 @@ public class Appointment {
   @Column(name = "name_client")
   private String nameClient;
 
+  @Column(name = "new_client")
+  private Boolean newClient;
+
+  @Column(name = "phone_number")
+  private Integer phoneNumber;
+
+  @Column(name = "motive")
+  private String motive;
+
   @Column(name = "date")
   private LocalDate date;
 
   @Column(name = "time")
   private LocalTime time;
 
-  @Column(name = "phone_number")
-  private Integer phoneNumber;
+  @OneToMany(mappedBy="appointment")
+  private List<Car> carList;
 
-  @Column(name = "plate_number")
-  private String plateNumber;
-
-  @Column(name = "motive")
-  private String motive;
-
-  @Column(name = "new_client")
-  private Boolean newClient;
 }

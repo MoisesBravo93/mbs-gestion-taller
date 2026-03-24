@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.monica.practica.gestion_taller.model.Appointment;
+import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.repository.AppointmentRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,7 @@ public class AppointmentService {
     appointmentRepository.deleteById(id);
     return "Deleted Appointment with ID:- " + id;
   }
+
+
 
 }
