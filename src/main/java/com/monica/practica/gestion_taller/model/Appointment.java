@@ -20,6 +20,7 @@ public class Appointment {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   @Column(name = "name_client")
@@ -40,7 +41,8 @@ public class Appointment {
   @Column(name = "time")
   private LocalTime time;
 
-  @OneToMany(mappedBy="appointment")
-  private List<Car> carList;
+  @OneToOne(cascade = CascadeType.ALL) // Cascade.ALL --> any operation performed on appointment entity should also be performed on the car entity
+  @JoinColumn(name = "car_id", referencedColumnName = "id") // Foreing Key
+  private Car car;
 
 }

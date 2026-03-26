@@ -16,7 +16,8 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long carId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "plate_number")
     private String plateNumber;
@@ -29,9 +30,5 @@ public class Car {
 
     @Column (name = "is_electric")
     private Boolean isElectric;
-
-    @ManyToOne
-    @JoinColumn(name="name_client")
-    private Appointment appointment;
 
 }

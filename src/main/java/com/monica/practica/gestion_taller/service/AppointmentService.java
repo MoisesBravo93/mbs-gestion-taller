@@ -40,6 +40,4 @@ public class AppointmentService {
     return "Deleted Appointment with ID:- " + id;
   }
 
-
-
 }

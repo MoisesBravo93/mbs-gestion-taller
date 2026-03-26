@@ -34,7 +34,6 @@ public class AppointmentController {
     return appointmentService.getAllAppointments();
   }
 
-
   @DeleteMapping("/appointment/{id}")
   public String deleteAppointment(@PathVariable Long id) {
     return appointmentService.deleteAppointment(id);
@@ -42,7 +41,6 @@ public class AppointmentController {
 
   // @PatchMapping
   //actualizaciones parciales
-
 
 }
 
