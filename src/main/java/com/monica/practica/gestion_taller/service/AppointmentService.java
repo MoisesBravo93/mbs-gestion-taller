@@ -2,11 +2,13 @@ package com.monica.practica.gestion_taller.service;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.repository.AppointmentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,24 +22,41 @@ public class AppointmentService {
     this.appointmentRepository = appointmentRepository;
   }
 
+  // Appointments
+
   public ResponseEntity<Appointment> postAppointment(Appointment newAppointment) {
+    // Check: if exists --> error, if not --> save
+    Optional<Appointment> aux = appointmentRepository.findAppointmentByNameClient(newAppointment.getNameClient());
+    if (aux.isPresent()) {
+      return ResponseEntity.status(HttpStatus.CONFLICT).body(aux.get());
+    }
+
     Appointment savedAppointment = appointmentRepository.save(newAppointment);
     URI location = ServletUriComponentsBuilder
             .fromCurrentRequest().path("/appointment/{id}").buildAndExpand(savedAppointment.getId()).toUri();
     return ResponseEntity.created(location).body(savedAppointment);
   }
 
-    public Optional<Appointment> getAppointment(Long id) {
-      return appointmentRepository.findById(id);
-    }
+  public Optional<Appointment> getAppointment(Long id) { return appointmentRepository.findById(id); }
 
-  public List<Appointment> getAllAppointments() {
-    return appointmentRepository.findAll();
-  }
+  public List<Appointment> getAllAppointments() {return appointmentRepository.findAll();}
 
   public String deleteAppointment(Long id) {
     appointmentRepository.deleteById(id);
     return "Deleted Appointment with ID:- " + id;
+  }
+
+  // Cars
+
+  public Optional<Car> getCar(Long id) { return appointmentRepository.findById(id).map(Appointment::getCar); }
+
+  public List<Car> getAllCars() {
+    return appointmentRepository.findAll()
+            .stream()
+            .map(Appointment::getCar)
+            .filter(Objects::nonNull)
+            .distinct()
+            .toList();
   }
 
 }

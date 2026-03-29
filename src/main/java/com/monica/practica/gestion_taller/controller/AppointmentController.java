@@ -29,7 +29,7 @@ public class AppointmentController {
     return appointmentService.getAppointment(id);
   }
 
-  @GetMapping("/appointment")
+  @GetMapping("/appointments")
   public List<Appointment> getAllAppointments() {
     return appointmentService.getAllAppointments();
   }
@@ -39,8 +39,13 @@ public class AppointmentController {
     return appointmentService.deleteAppointment(id);
   }
 
-  // @PatchMapping
-  //actualizaciones parciales
+  // Cars
+
+  @GetMapping("/appointment/{id}/car")
+  public Optional<Car> getCar(@PathVariable Long id) { return appointmentService.getCar(id); }
+
+  @GetMapping("/appointments/cars")
+  public List<Car> getAllCars(){ return appointmentService.getAllCars(); }
 
 }
 
