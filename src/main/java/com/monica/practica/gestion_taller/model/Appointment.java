@@ -2,13 +2,12 @@ package com.monica.practica.gestion_taller.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import lombok.*;
 
 @Data
 @Entity
@@ -18,31 +17,37 @@ import lombok.NoArgsConstructor;
 @Table(name = "appointment")
 public class Appointment {
 
+  public interface AppointmentsValidate {}
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "name_client")
+  @Column(name = "name_client", unique = true)
+  @NotBlank(groups = AppointmentsValidate.class, message = "Name required")
   private String nameClient;
 
   @Column(name = "new_client")
   private Boolean newClient;
 
-  @Column(name = "phone_number")
+  @Column(name = "phone_number", unique = true)
+  @NotNull(groups = AppointmentsValidate.class, message = "Phone number required")
   private Integer phoneNumber;
 
   @Column(name = "motive")
   private String motive;
 
   @Column(name = "date")
+  @NotNull(groups = AppointmentsValidate.class, message = "Date required")
   private LocalDate date;
 
   @Column(name = "time")
+  @NotNull(groups = AppointmentsValidate.class, message = "Time required")
   private LocalTime time;
 
   @OneToOne(cascade = CascadeType.ALL) // Cascade.ALL --> any operation performed on appointment entity should also be performed on the car entity
-  @JoinColumn(name = "car_id", referencedColumnName = "id") // Foreing Key
+  @JoinColumn(name = "car_id", referencedColumnName = "id") // Foreign Key
   private Car car;
 
 }

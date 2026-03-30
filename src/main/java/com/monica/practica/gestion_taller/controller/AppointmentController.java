@@ -6,7 +6,9 @@ import java.util.Optional;
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.service.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +22,7 @@ public class AppointmentController {
   }
 
   @PostMapping("/appointment")
-  public ResponseEntity<Appointment> postAppointment(@RequestBody Appointment newAppointment) {
+  public ResponseEntity<Appointment> postAppointment(@Validated(Appointment.AppointmentsValidate.class) @RequestBody Appointment newAppointment) {
     return appointmentService.postAppointment(newAppointment);
   }
 

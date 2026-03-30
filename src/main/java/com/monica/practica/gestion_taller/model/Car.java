@@ -1,6 +1,8 @@
 package com.monica.practica.gestion_taller.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +21,8 @@ public class Car {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "plate_number")
+    @Column(name = "plate_number", unique = true)
+    @NotBlank(groups = Appointment.AppointmentsValidate.class, message = "Plate number required.")
     private String plateNumber;
 
     @Column(name = "brand")
