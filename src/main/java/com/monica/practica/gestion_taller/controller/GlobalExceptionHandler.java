@@ -18,8 +18,9 @@ public class GlobalExceptionHandler {
     // Generic exceptions --> Return error HTTP 500
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception e) {
-        return ResponseEntity.internalServerError().body("Internal Server Error");
+        return ResponseEntity.internalServerError().body(e.getMessage());
     }
+
 
     // Validation Errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -34,17 +35,29 @@ public class GlobalExceptionHandler {
                         )
                 );
 
-        return buildResponse("Validation errors", errors);
+        return buildResponse( e.getMessage(), errors, HttpStatus.BAD_REQUEST.value());
     }
 
-    // Response errors list
-    private ResponseEntity<Map<String, Object>> buildResponse(String message,  Map<String, List<String>> errors){
+    // Appointment Not Found Error
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ResponseEntity<Map<String,Object>> handleAppointmentNotFound(AppointmentNotFoundException e){
+        return buildResponse( e.getMessage(), null, HttpStatus.NOT_FOUND.value());
+    }
+
+    // Duplicate Appointment Error
+    @ExceptionHandler(AppointmentDuplicatedException.class)
+    public ResponseEntity<Map<String,Object>> handleAppointmentDuplicated(AppointmentDuplicatedException e){
+        return buildResponse( e.getMessage(), null, HttpStatus.BAD_REQUEST.value());
+    }
+
+    // Response Errors List
+    private ResponseEntity<Map<String, Object>> buildResponse(String message,  Map<String, List<String>> errors, int status){
 
         Map<String, Object> response = new HashMap<>();
         response.put("Timestamp", LocalDateTime.now());
-        response.put("Status", HttpStatus.BAD_REQUEST.value());
+        response.put("Status", status);
         response.put("Message", message);
-        response.put("Errors", errors);
+        if(errors!=null){response.put("Errors", errors);}
 
         return ResponseEntity.badRequest().body(response);
     }

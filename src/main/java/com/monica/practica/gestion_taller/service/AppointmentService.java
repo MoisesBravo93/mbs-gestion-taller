@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.monica.practica.gestion_taller.controller.AppointmentDuplicatedException;
+import com.monica.practica.gestion_taller.controller.AppointmentNotFoundException;
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.repository.AppointmentRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +28,11 @@ public class AppointmentService {
   public ResponseEntity<Appointment> postAppointment(Appointment newAppointment) {
     // Check: if exists --> error, if not --> save
     Optional<Appointment> aux = appointmentRepository.findAppointmentByNameClient(newAppointment.getNameClient());
-    if (aux.isPresent()) {
-      return ResponseEntity.status(HttpStatus.CONFLICT).body(aux.get());
+    if (aux.isPresent()
+            && newAppointment.getDate().equals(aux.get().getDate())
+            && newAppointment.getTime().equals(aux.get().getTime())
+    ) {
+      throw new AppointmentDuplicatedException("Appointment already exists");
     }
 
     Appointment savedAppointment = appointmentRepository.save(newAppointment);
@@ -37,7 +41,10 @@ public class AppointmentService {
     return ResponseEntity.created(location).body(savedAppointment);
   }
 
-  public Optional<Appointment> getAppointment(Long id) { return appointmentRepository.findById(id); }
+  public Appointment getAppointment(Long id) {
+    return appointmentRepository.findById(id).orElseThrow(() ->
+            new AppointmentNotFoundException("Appointment with id " +  id + " not found"));
+  }
 
   public List<Appointment> getAllAppointments() {return appointmentRepository.findAll();}
 
@@ -48,7 +55,10 @@ public class AppointmentService {
 
   // Cars
 
-  public Optional<Car> getCar(Long id) { return appointmentRepository.findById(id).map(Appointment::getCar); }
+  public Car getCar(Long id) {
+    return appointmentRepository.findById(id).map(Appointment::getCar).orElseThrow(() ->
+            new AppointmentNotFoundException("Car with id " +  id + " not found"));
+  }
 
   public List<Car> getAllCars() {
     return appointmentRepository.findAll()

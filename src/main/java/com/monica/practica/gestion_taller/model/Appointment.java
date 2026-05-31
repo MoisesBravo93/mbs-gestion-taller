@@ -24,14 +24,14 @@ public class Appointment {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "name_client", unique = true)
+  @Column(name = "name_client")
   @NotBlank(groups = AppointmentsValidate.class, message = "Name required")
   private String nameClient;
 
   @Column(name = "new_client")
   private Boolean newClient;
 
-  @Column(name = "phone_number", unique = true)
+  @Column(name = "phone_number")
   @NotNull(groups = AppointmentsValidate.class, message = "Phone number required")
   private Integer phoneNumber;
 

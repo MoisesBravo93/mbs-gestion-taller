@@ -21,7 +21,7 @@ public class Car {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "plate_number", unique = true)
+    @Column(name = "plate_number")
     @NotBlank(groups = Appointment.AppointmentsValidate.class, message = "Plate number required.")
     private String plateNumber;
 

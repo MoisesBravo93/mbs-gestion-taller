@@ -1,12 +1,10 @@
 package com.monica.practica.gestion_taller.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.model.Car;
 import com.monica.practica.gestion_taller.service.AppointmentService;
-import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +25,7 @@ public class AppointmentController {
   }
 
   @GetMapping("/appointment/{id}")
-  public Optional<Appointment> getAppointment(@PathVariable Long id) {
-    return appointmentService.getAppointment(id);
-  }
+  public Appointment getAppointment(@PathVariable Long id) {return appointmentService.getAppointment(id);}
 
   @GetMapping("/appointments")
   public List<Appointment> getAllAppointments() {
@@ -44,7 +40,7 @@ public class AppointmentController {
   // Cars
 
   @GetMapping("/appointment/{id}/car")
-  public Optional<Car> getCar(@PathVariable Long id) { return appointmentService.getCar(id); }
+  public Car getCar(@PathVariable Long id) { return appointmentService.getCar(id); }
 
   @GetMapping("/appointments/cars")
   public List<Car> getAllCars(){ return appointmentService.getAllCars(); }
