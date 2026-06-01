@@ -50,4 +50,8 @@ public class Appointment {
   @JoinColumn(name = "car_id", referencedColumnName = "id") // Foreign Key
   private Car car;
 
+//  @ManyToOne
+//  @JoinColumn(name = "mechanic_name", referencedColumnName = "name")
+//  private Mechanic mechanic;
+
 }

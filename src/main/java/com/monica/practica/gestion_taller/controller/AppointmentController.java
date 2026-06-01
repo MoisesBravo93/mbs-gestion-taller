@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.monica.practica.gestion_taller.model.Appointment;
 import com.monica.practica.gestion_taller.model.Car;
+import com.monica.practica.gestion_taller.model.Mechanic;
 import com.monica.practica.gestion_taller.service.AppointmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -44,6 +45,31 @@ public class AppointmentController {
 
   @GetMapping("/appointments/cars")
   public List<Car> getAllCars(){ return appointmentService.getAllCars(); }
+
+  // Mechanics
+
+  @PostMapping("/mechanic")
+  public ResponseEntity<Mechanic> postMechanic( @Validated(Mechanic.MechanicValidate.class) @RequestBody Mechanic newMechanic) {
+    return appointmentService.postMechanic(newMechanic);
+  }
+
+  @GetMapping("/mechanic/{id}")
+  public Mechanic getMechanic(@PathVariable Long id) {return appointmentService.getMechanic(id);}
+
+  @GetMapping("/mechanics")
+  public List<Mechanic> getAllMechanics(){return appointmentService.getAllMechanics();}
+
+  @DeleteMapping("/mechanic/{id}")
+  public String deleteMechanic(@PathVariable Long id) {
+    return appointmentService.deleteMechanic(id);
+  }
+
+  // Mechanic By Appointment
+
+//  @GetMapping("/mechanic/appointment{id}")
+//  public Mechanic getMechanicByAppointment(@PathVariable Long id) {return appointmentService.getMechanicByAppointment(id);}
+
+
 
 }
 
